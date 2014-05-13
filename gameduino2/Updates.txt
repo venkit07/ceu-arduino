@@ -1,0 +1,18 @@
+Google Summer of Code 2014
+Weekly Updates
+
+
+13.05.14
+* What I was supposed to do in the previous week.
+  Initial Period
+
+* What I did in the previous week.
+  Purchased Gameduino 2 and Arduino Uno.
+  Set up Céu in a Box environment.
+  Executed the Céu examples for Arduino successfully.
+  Facing issues while powering the Gameduino. Forum says to try replacing the USB cable. 
+  Working on getting this issue solved.
+  
+* What I'll do this week.
+  Get familiarized with Céu better from the website.
+  Get familiarized with Gameduino 2 specifics.
