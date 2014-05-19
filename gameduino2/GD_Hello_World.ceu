@@ -1,16 +1,17 @@
 #include "arduino.ceu"
 
 native do
-	##include "EEPROM.hh"
-	##include "SPI.hh"
-	##include "GD2.hh"
+    ##include "EEPROM.h"
+    ##include "SPI.h"
+    ##include "GD2.h"
 end
 
-GD.begin();
+_GD.begin();
 
-loop do
-	GD.ClearColorRGB(0x103000);
-	GD.Clear();
-	GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
-	GD.swap();
+loop i do
+    _GD.ClearColorRGB(0x103000);
+    _GD.Clear();
+    _GD.cmd_text(i%400, 136, 31, _OPT_CENTER, "Hello world");
+    _GD.swap();
+    await 10ms;
 end
