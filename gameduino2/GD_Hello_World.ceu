@@ -6,11 +6,11 @@ native do
 	##include "GD2.hh"
 end
 
-GD.begin();
+_GD.begin();
 
 loop do
-	GD.ClearColorRGB(0x103000);
-	GD.Clear();
-	GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
-	GD.swap();
+	_GD.ClearColorRGB(0x103000);
+	_GD.Clear();
+	_GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+	_GD.swap();
 end
