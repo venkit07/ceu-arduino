@@ -8,26 +8,27 @@ Weekly Updates
 
 * What I did in the previous week.
   Purchased Gameduino 2 and Arduino Uno.
-  Set up Céu in a Box environment.
-  Executed the Céu examples for Arduino successfully.
+  Set up Cï¿½u in a Box environment.
+  Executed the Cï¿½u examples for Arduino successfully.
   Facing issues while powering the Gameduino. Forum says to try replacing the USB cable. 
   Working on getting this issue solved.
   
 * What I'll do this week.
-  Get familiarized with Céu better from the website.
+  Get familiarized with Cï¿½u better from the website.
   Get familiarized with Gameduino 2 specifics.
 __________________________________________________________________________________________________________
 
 20.05.14
 * What I was supposed to do in the previous week.
   Fix Gameduino 2 hardware issues. 
-  Get familiarized with Céu and Gameduino 2 library.
+  Get familiarized with Cï¿½u and Gameduino 2 library.
 
 * What I did in the previous week.
   Faced environment issues. 
-  Francisco Sir fixed various issues in the Céu environment to make it Gameduino 2 compatible.
-  Ported the Hello World Gameduino 2 example to Céu.
+  Francisco Sir fixed various issues in the Cï¿½u environment to make it Gameduino 2 compatible.
+  Ported the Hello World Gameduino 2 example to Cï¿½u.
   
 * What I'll do this week.
-  Work on the SDL examples in Céu to port them to Gameduino 2.
+  Work on the SDL examples in Cï¿½u to port them to Gameduino 2.
   Identify the algorithms of the Gameduino 2 demos and classify them on the basis of difficulty.
+  Read the academic paper on Cï¿½u.
