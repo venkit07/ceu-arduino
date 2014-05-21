@@ -6,25 +6,60 @@ native do
     ##include "GD2.h"
 end
 
-_GD.begin();
+input void GD_REDRAW;
 
-var int fx1=0,fy1=0;
-var int fx2=30,fy2=30;
+par/or do
 
-loop do
-	if(fx2 == 480) then
-		break;
-	end
-	await 1s;
-    _GD.ClearColorRGB(0xffff00);
-   	_GD.Clear();
-   	_GD.Begin(_RECTS);
-   	_GD.ColorRGB(0xff0000);
-	_GD.Vertex2ii(fx1, fy1);
-	_GD.Vertex2ii(fx2, fy2);
-   	_GD.swap();
-   	fx2 = fx2 + 30;
-   	fy2 = fy2 + 17;
-   	fx1 = fx2 - 30;
-   	fy1 = fy2 - 30;
+    /* This trail "drives" the Gameduino library, initializing, finalizing,
+     * and generating all input events to Ceu. It runs forever and is supposed 
+     * to be in another file so that other applications can reuse it.
+     */
+
+    /* Inititalization & Finalization */
+    _GD.begin();
+    finalize with
+        _GD.finish();
+    end
+
+    /* Poll input events from the library forever and redirect them to Ceu.
+     * Each iteration of the loop represents a "frame" in the game.
+     */
+    loop do
+        async do
+            emit GD_REDRAW; // REDRAW every loop iteration, after other events.
+        end
+    end
+
+with
+
+    /* This is the "main" trail with the application logic. */
+
+    var int fx1=0,  fy1=0;
+    var int fx2=30, fy2=30;
+
+    par/or do
+        // moves the rectangle every second
+        every 1s do
+            fx2 = fx2 + 30;
+            fy2 = fy2 + 17;
+            fx1 = fx2 - 30;
+            fy1 = fy2 - 30;
+            if(fx2 == 480) then
+                break;
+            end
+        end
+    with
+        // redraws the current state every frame
+        every GD_REDRAW do
+            _GD.ClearColorRGB(0xffff00);
+            _GD.Clear();
+            _GD.Begin(_RECTS);
+            _GD.ColorRGB(0xff0000);
+            _GD.Vertex2ii(fx1, fy1);
+            _GD.Vertex2ii(fx2, fy2);
+            _GD.swap();
+        end
+    end
 end
+
+escape 0;
