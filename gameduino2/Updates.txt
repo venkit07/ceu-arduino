@@ -1,4 +1,4 @@
-Google Summer of Code 2014
+﻿Google Summer of Code 2014
 Weekly Updates
 
 
@@ -32,3 +32,21 @@ ________________________________________________________________________________
   Work on the SDL examples in C�u to port them to Gameduino 2.
   Identify the algorithms of the Gameduino 2 demos and classify them on the basis of difficulty.
   Read the academic paper on C�u.
+
+__________________________________________________________________________________________________________
+
+27.05.14
+* What I was supposed to do in the previous week.
+  Work on the SDL examples in C�u to port them to Gameduino 2.
+  Identify the algorithms of the Gameduino 2 demos and classify them on the basis of difficulty.
+  Read the academic paper on C�u.
+
+* What I did in the previous week.
+  Ported the SDL example to Gameduino 2 with help from Francisco Sir on the structure of the program. 
+  Classified the 12 examples on the basis of difficulty.
+  Partially completed reading the academic paper.
+  
+* What I'll do this week.
+  Finish reading the academic paper on C�u.
+  Start coding up blobs and abstract programs.
+
