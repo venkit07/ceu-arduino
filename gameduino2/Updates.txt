@@ -42,10 +42,32 @@ ________________________________________________________________________________
   Read the academic paper on C�u.
 
 * What I did in the previous week.
-  Ported the SDL example to Gameduino 2 with help from Francisco Sir on the structure of the program. 
-  Classified the 12 examples on the basis of difficulty.
-  Partially completed reading the academic paper.
+  Ported the SDL example to Gameduino 2 with help from Francisco Sir on the structure of the program.
+  Partially completed reading the academic paper. 
+  Classified the 13 examples on the basis of difficulty.
+
+  Classification: 
+
+  Easy
+	hello world
+	blobs
+	sprites
+	abstract
+
+  Medium
+	viewer
+	cobra
+	kenney
+	jnr
+
+  Hard
+	manic miner
+	chess
+	frogger
+	invaders
+	nightstrike
   
+
 * What I'll do this week.
   Finish reading the academic paper on C�u.
   Start coding up blobs and abstract programs.
