@@ -1,0 +1,92 @@
+#include "arduino.ceu"
+
+native do
+    ##include "EEPROM.h"
+    ##include "SPI.h"
+    ##include "GD2.h"
+    ##define NBLOBS 128
+    ##define OFFSCREEN -16384
+    struct xy {
+        int x, y;
+    } blobs[NBLOBS];
+
+    static byte blob_i;
+end
+
+
+input void GD_REDRAW;
+
+var int i;
+
+par/or do
+    /* Setup */
+	_GD.begin();
+    finalize with
+    	_GD.finish();
+    end
+
+    i=0;
+
+    loop do
+        if(i == _NBLOBS) then
+            break;
+        end
+        blobs[i].x = _OFFSCREEN;
+        blobs[i].y = _OFFSCREEN;
+
+        i = i + 1;
+    end
+
+    loop do
+        async do
+            emit GD_REDRAW; // REDRAW every loop iteration, after other events.
+        end
+    end
+with
+    par/or do
+        // Get the touch coordinates and store in array
+        _GD.get_inputs();
+        if (_GD.inputs.x != -32768) {
+            blobs[blob_i].x = _GD.inputs.x << 4;
+            blobs[blob_i].y = _GD.inputs.y << 4;
+        } else {
+            blobs[blob_i].x = _OFFSCREEN;
+            blobs[blob_i].y = _OFFSCREEN;
+        }
+        blob_i = (blob_i + 1) & (_NBLOBS - 1);
+    with
+        // draws the blobs on screen
+        every GD_REDRAW do
+            _GD.ClearColorRGB(0xe0e0e0);
+            _GD.Clear();
+
+            _GD.Begin(_POINTS);
+            i = 0;
+
+            loop do
+                if(i == _NBLOBS) then
+                    break;
+                end
+                blobs[i].x = _OFFSCREEN;
+                blobs[i].y = _OFFSCREEN;
+
+                i = i + 1;
+
+                _GD.ColorA(i << 1);
+                _GD.PointSize((1024 + 16) - (i << 3));
+
+                // Random color for each blob, keyed from (blob_i + i)
+                uint8_t j = (blob_i + i) & (_NBLOBS - 1);
+                byte r = j * 17;
+                byte g = j * 23;
+                byte b = j * 147;
+                _GD.ColorRGB(r, g, b);
+
+                // Draw it!
+                _GD.Vertex2f(blobs[j].x, blobs[j].y);
+            end
+
+            _GD.swap();
+        end
+    end
+end
