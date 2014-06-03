@@ -20,9 +20,9 @@ var int i;
 
 par/or do
     /* Setup */
-	_GD.begin();
+_GD.begin();
     finalize with
-    	_GD.finish();
+     _GD.finish();
     end
 
     i=0;
@@ -31,8 +31,8 @@ par/or do
         if(i == _NBLOBS) then
             break;
         end
-        blobs[i].x = _OFFSCREEN;
-        blobs[i].y = _OFFSCREEN;
+        _blobs[i].x = _OFFSCREEN;
+        _blobs[i].y = _OFFSCREEN;
 
         i = i + 1;
     end
@@ -46,14 +46,14 @@ with
     par/or do
         // Get the touch coordinates and store in array
         _GD.get_inputs();
-        if (_GD.inputs.x != -32768) {
-            blobs[blob_i].x = _GD.inputs.x << 4;
-            blobs[blob_i].y = _GD.inputs.y << 4;
-        } else {
-            blobs[blob_i].x = _OFFSCREEN;
-            blobs[blob_i].y = _OFFSCREEN;
-        }
-        blob_i = (blob_i + 1) & (_NBLOBS - 1);
+        if (_GD.inputs.x != -32768) then
+            _blobs[_blob_i].x = _GD.inputs.x << 4;
+            _blobs[_blob_i].y = _GD.inputs.y << 4;
+        else
+            _blobs[_blob_i].x = _OFFSCREEN;
+            _blobs[_blob_i].y = _OFFSCREEN;
+        end
+        _blob_i = (_blob_i + 1) & (_NBLOBS - 1);
     with
         // draws the blobs on screen
         every GD_REDRAW do
@@ -67,8 +67,8 @@ with
                 if(i == _NBLOBS) then
                     break;
                 end
-                blobs[i].x = _OFFSCREEN;
-                blobs[i].y = _OFFSCREEN;
+                _blobs[i].x = _OFFSCREEN;
+                _blobs[i].y = _OFFSCREEN;
 
                 i = i + 1;
 
@@ -76,14 +76,14 @@ with
                 _GD.PointSize((1024 + 16) - (i << 3));
 
                 // Random color for each blob, keyed from (blob_i + i)
-                uint8_t j = (blob_i + i) & (_NBLOBS - 1);
-                byte r = j * 17;
-                byte g = j * 23;
-                byte b = j * 147;
+                var u8 j = (_blob_i + i) & (_NBLOBS - 1);
+                var u8 r = j * 17;
+                var u8 g = j * 23;
+                var u8 b = j * 147;
                 _GD.ColorRGB(r, g, b);
 
                 // Draw it!
-                _GD.Vertex2f(blobs[j].x, blobs[j].y);
+                _GD.Vertex2f(_blobs[j].x, _blobs[j].y);
             end
 
             _GD.swap();
