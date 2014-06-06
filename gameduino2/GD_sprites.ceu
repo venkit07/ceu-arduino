@@ -1,5 +1,5 @@
-var int nspr;
-var u8 t = 0;
+var int nspr;    // upto 1745
+var u8 t = 0,j;
 var u32 v,r;
 
 input (int,int) GD_TOUCH;
@@ -24,13 +24,14 @@ with
     		native do
 				PROGMEM prog_uint32_t *pv = sprites;
 			end
+			j = t;
 			//_pv = _sprites;
-		    loop j in nspr do
+		    loop i in nspr do
 		    	v = _pgm_read_dword(_pv);
-		        r = _pgm_read_dword(_circle + t);
+		        r = _pgm_read_dword(_circle + j);
 		        _GD.cmd32(v + r);
 		        //_pv = _pv + 1;
-		        t = t + 1;
+		        j = j + 1;
 		    end
         end
     with
