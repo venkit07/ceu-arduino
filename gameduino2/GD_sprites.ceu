@@ -25,10 +25,10 @@ with
     		_GD.RestoreContext();
 
     		_GD.cmd_number(215, 110, 31, OPT_RIGHTX, nspr+256);  
-    		_GD.cmd_text(  229, 110, 31, 0, "sprites");
+    		_GD.cmd_text(229, 110, 31, 0, "sprites");
     with
         PROGMEM prog_uint32_t *pv = sprites;
-      	loop j in nspr do
+      	loop j in nspr+256 do
       		v = pgm_read_dword(pv++);
       		r = pgm_read_dword(circle + t++);
       		_GD.cmd32(v + r);
