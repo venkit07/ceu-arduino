@@ -1,41 +1,52 @@
-
-//#define NBLOBS 16   // you can use define's from Céu as well
-
-//input void      GD_REDRAW;
-
-
-var int nspr = -1;    // upto 1745
+var int nspr;
 var u8 t = 0;
+var u32 v,r;
+
+input (int,int) GD_TOUCH;
+input void GD_REDRAW;
+
+#include "sprites_assets.ceu"
+
 
 par/or do
     // let's now handle library initialization and inputs in another file to avoid confusion with the application
     #include "gd.ceu"
 with
-  	par/or do
-  		nspr = (nspr + 1)%1745;
-  		t = t + 1;
-  	with
-        _GD.Clear();
-        _GD.ColorRGB(0x000000);
-    		_GD.ColorA(140);
-    		_GD.LineWidth(28 * 16);
-    		_GD.Begin(LINES);
-    		_GD.Vertex2ii(240 - 110, 136, 0, 0);
-    		_GD.Vertex2ii(240 + 110, 136, 0, 0);
-    		_GD.RestoreContext();
-
-    		_GD.cmd_number(215, 110, 31, OPT_RIGHTX, nspr+256);  
-    		_GD.cmd_text(229, 110, 31, 0, "sprites");
+    par/or do
+    	every 5us do
+    		nspr = _min(2001, _max(256,19*t));
+    		t = t + 1;
+    	end
+    
     with
-        PROGMEM prog_uint32_t *pv = sprites;
-      	loop j in nspr+256 do
-      		v = pgm_read_dword(pv++);
-      		r = pgm_read_dword(circle + t++);
-      		_GD.cmd32(v + r);
-      	end
-  	with
-  	    every GD_REDRAW do
-  	        _GD.swap();
-  	    end
-  	end
+    	loop do
+    		_GD.Begin(_BITMAPS);
+    		native do
+				PROGMEM prog_uint32_t *pv = sprites;
+			end
+			//_pv = _sprites;
+		    loop j in nspr do
+		    	v = _pgm_read_dword(_pv);
+		        r = _pgm_read_dword(_circle + t);
+		        _GD.cmd32(v + r);
+		        //_pv = _pv + 1;
+		        t = t + 1;
+		    end
+        end
+    with
+        every GD_REDRAW do
+        	_GD.Clear();
+		    _GD.ColorRGB(0xffff00);
+		    _GD.ColorA(140);
+		    _GD.LineWidth(28 * 16);
+		    _GD.Begin(_LINES);
+		    _GD.Vertex2ii(240 - 110, 136, 0, 0);
+		    _GD.Vertex2ii(240 + 110, 136, 0, 0);
+		    _GD.RestoreContext();
+
+		    _GD.cmd_number(215, 110, 31, _OPT_RIGHTX, nspr);
+		    _GD.cmd_text(  229, 110, 31, 0, "sprites");
+        	_GD.swap();
+        end
+    end
 end
