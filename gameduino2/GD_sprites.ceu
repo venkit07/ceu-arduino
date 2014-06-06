@@ -1,0 +1,41 @@
+
+//#define NBLOBS 16   // you can use define's from Céu as well
+
+//input void      GD_REDRAW;
+
+
+var int nspr = -1;    // upto 1745
+var u8 t = 0;
+
+par/or do
+    // let's now handle library initialization and inputs in another file to avoid confusion with the application
+    #include "gd.ceu"
+with
+  	par/or do
+  		nspr = (nspr + 1)%1745;
+  		t = t + 1;
+  	with
+        _GD.Clear();
+        _GD.ColorRGB(0x000000);
+    		_GD.ColorA(140);
+    		_GD.LineWidth(28 * 16);
+    		_GD.Begin(LINES);
+    		_GD.Vertex2ii(240 - 110, 136, 0, 0);
+    		_GD.Vertex2ii(240 + 110, 136, 0, 0);
+    		_GD.RestoreContext();
+
+    		_GD.cmd_number(215, 110, 31, OPT_RIGHTX, nspr);  
+    		_GD.cmd_text(  229, 110, 31, 0, "sprites");
+    with
+        PROGMEM prog_uint32_t *pv = sprites;
+      	loop j in nspr do
+      		v = pgm_read_dword(pv++);
+      		r = pgm_read_dword(circle + t++);
+      		_GD.cmd32(v + r);
+      	end
+  	with
+  	    every GD_REDRAW do
+  	        _GD.swap();
+  	    end
+  	end
+end

@@ -1,92 +1,60 @@
-#include "arduino.ceu"
+#define NBLOBS 16   // you can use define's from Céu as well
 
-native do
-    ##include "EEPROM.h"
-    ##include "SPI.h"
-    ##include "GD2.h"
-    ##define NBLOBS 128
-    ##define OFFSCREEN -16384
-    struct xy {
-        int x, y;
-    } blobs[NBLOBS];
+input void      GD_REDRAW;
+input (int,int) GD_TOUCH;   // I want (x,y) for touch events
 
-    static byte blob_i;
+// now the blob class
+class Blob with
+    var int i;        // each blob has a different incremental "i"
+    var int x, y;     // and a position (where the user clicked)
+do
+    var int diam  =  10;   // blobs are circles with a diam
+    var int alpha = 255;   // and no transparency initially
+
+    var byte r = i *  17;  // each blob has a different color
+    var byte g = i *  23;  // based on its "i"
+    var byte b = i * 147;
+
+    // make the blob disappear gradually
+    loop j in 30 do          // 30 times is arbitrary (based on visual tests)
+        await GD_REDRAW;
+        diam  = diam  + 2;   // increment the diameter a little bit
+        alpha = alpha - 5;   // and also the transparency
+        _GD.Begin(_POINTS);
+        _GD.ColorA(alpha);
+        _GD.PointSize(diam << 4);
+        _GD.ColorRGB(r, g, b);
+        _GD.Vertex2f(this.x, this.y);
+    end
 end
 
-
-input void GD_REDRAW;
-
-var int i;
-
 par/or do
-    /* Setup */
-	_GD.begin();
-    finalize with
-    	_GD.finish();
-    end
-
-    i=0;
-
-    loop do
-        if(i == _NBLOBS) then
-            break;
-        end
-        blobs[i].x = _OFFSCREEN;
-        blobs[i].y = _OFFSCREEN;
-
-        i = i + 1;
-    end
-
-    loop do
-        async do
-            emit GD_REDRAW; // REDRAW every loop iteration, after other events.
-        end
+    // let's now handle library initialization and inputs in another file to avoid confusion with the application
+    #include "gd.ceu"
+with
+    // clear the screen every frame
+    every GD_REDRAW do
+        _GD.ClearColorRGB(0xe0e0e0);
+        _GD.Clear();
     end
 with
-    par/or do
-        // Get the touch coordinates and store in array
-        _GD.get_inputs();
-        if (_GD.inputs.x != -32768) {
-            blobs[blob_i].x = _GD.inputs.x << 4;
-            blobs[blob_i].y = _GD.inputs.y << 4;
-        } else {
-            blobs[blob_i].x = _OFFSCREEN;
-            blobs[blob_i].y = _OFFSCREEN;
-        }
-        blob_i = (blob_i + 1) & (_NBLOBS - 1);
-    with
-        // draws the blobs on screen
-        every GD_REDRAW do
-            _GD.ClearColorRGB(0xe0e0e0);
-            _GD.Clear();
-
-            _GD.Begin(_POINTS);
-            i = 0;
-
-            loop do
-                if(i == _NBLOBS) then
-                    break;
-                end
-                blobs[i].x = _OFFSCREEN;
-                blobs[i].y = _OFFSCREEN;
-
-                i = i + 1;
-
-                _GD.ColorA(i << 1);
-                _GD.PointSize((1024 + 16) - (i << 3));
-
-                // Random color for each blob, keyed from (blob_i + i)
-                uint8_t j = (blob_i + i) & (_NBLOBS - 1);
-                byte r = j * 17;
-                byte g = j * 23;
-                byte b = j * 147;
-                _GD.ColorRGB(r, g, b);
-
-                // Draw it!
-                _GD.Vertex2f(blobs[j].x, blobs[j].y);
-            end
-
-            _GD.swap();
-        end
+    // I have at most NBLOBS, which are held in this pool
+    pool Blob[NBLOBS] blobs;
+    var int i = 0;   // incremental "i" for blobs
+    var int x, y;
+    // now, I create a blob every time the user touches the screen
+    every (x,y) in GD_TOUCH do
+        spawn Blob in blobs with
+            this.i = i+1;  // a new blob
+            this.x = x;    // in the touch position
+            this.y = y;
+        end;
+        i = (i + 1) % NBLOBS;
+    end
+with
+    // all blobs execute in the other trails
+    // in the end, I need to update the screen (every frame)
+    every GD_REDRAW do
+        _GD.swap();
     end
 end
