@@ -5,14 +5,16 @@ var u32 v,r;
 input (int,int) GD_TOUCH;
 input void GD_REDRAW;
 
-#include "sprites_assets.ceu"
-
 
 par/or do
     // let's now handle library initialization and inputs in another file to avoid confusion with the application
     #include "gd.ceu"
 with
     par/or do
+    	native do
+			#include "sprites_assets.h"
+		end
+    	_LOAD_ASSETS();
     	every 5us do
     		nspr = _min(2001, _max(256,19*t));
     		t = t + 1;
@@ -30,10 +32,12 @@ with
 		    	v = _pgm_read_dword(_pv);
 		        r = _pgm_read_dword(_circle + j);
 		        _GD.cmd32(v + r);
-		        //_pv = _pv + 1;
+		        native do
+		        	pv = pv + 1;
+		        end 
 		        j = j + 1;
 		    end
-        end
+        end   
     with
         every GD_REDRAW do
         	_GD.Clear();
@@ -48,6 +52,6 @@ with
 		    _GD.cmd_number(215, 110, 31, _OPT_RIGHTX, nspr);
 		    _GD.cmd_text(  229, 110, 31, 0, "sprites");
         	_GD.swap();
-        end
+        end  
     end
 end
