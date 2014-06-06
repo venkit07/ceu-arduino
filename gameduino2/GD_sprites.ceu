@@ -24,7 +24,7 @@ with
     		_GD.Vertex2ii(240 + 110, 136, 0, 0);
     		_GD.RestoreContext();
 
-    		_GD.cmd_number(215, 110, 31, OPT_RIGHTX, nspr);  
+    		_GD.cmd_number(215, 110, 31, OPT_RIGHTX, nspr+256);  
     		_GD.cmd_text(  229, 110, 31, 0, "sprites");
     with
         PROGMEM prog_uint32_t *pv = sprites;
