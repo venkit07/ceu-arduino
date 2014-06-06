@@ -29,7 +29,6 @@ do
 end
 
 par/or do
-<<<<<<< HEAD
     // let's now handle library initialization and inputs in another file to avoid confusion with the application
     #include "gd.ceu"
 with
@@ -37,24 +36,6 @@ with
     every GD_REDRAW do
         _GD.ClearColorRGB(0xe0e0e0);
         _GD.Clear();
-=======
-    /* Setup */
-_GD.begin();
-    finalize with
-     _GD.finish();
-    end
-
-    i=0;
-
-    loop do
-        if(i == _NBLOBS) then
-            break;
-        end
-        _blobs[i].x = _OFFSCREEN;
-        _blobs[i].y = _OFFSCREEN;
-
-        i = i + 1;
->>>>>>> a23903bbe46a4134d5533d89e63c8cd676f5d3a5
     end
 with
     // I have at most NBLOBS, which are held in this pool
@@ -71,57 +52,9 @@ with
         i = (i + 1) % NBLOBS;
     end
 with
-<<<<<<< HEAD
     // all blobs execute in the other trails
     // in the end, I need to update the screen (every frame)
     every GD_REDRAW do
         _GD.swap();
-=======
-    par/or do
-        // Get the touch coordinates and store in array
-        _GD.get_inputs();
-        if (_GD.inputs.x != -32768) then
-            _blobs[_blob_i].x = _GD.inputs.x << 4;
-            _blobs[_blob_i].y = _GD.inputs.y << 4;
-        else
-            _blobs[_blob_i].x = _OFFSCREEN;
-            _blobs[_blob_i].y = _OFFSCREEN;
-        end
-        _blob_i = (_blob_i + 1) & (_NBLOBS - 1);
-    with
-        // draws the blobs on screen
-        every GD_REDRAW do
-            _GD.ClearColorRGB(0xe0e0e0);
-            _GD.Clear();
-
-            _GD.Begin(_POINTS);
-            i = 0;
-
-            loop do
-                if(i == _NBLOBS) then
-                    break;
-                end
-                _blobs[i].x = _OFFSCREEN;
-                _blobs[i].y = _OFFSCREEN;
-
-                i = i + 1;
-
-                _GD.ColorA(i << 1);
-                _GD.PointSize((1024 + 16) - (i << 3));
-
-                // Random color for each blob, keyed from (blob_i + i)
-                var u8 j = (_blob_i + i) & (_NBLOBS - 1);
-                var u8 r = j * 17;
-                var u8 g = j * 23;
-                var u8 b = j * 147;
-                _GD.ColorRGB(r, g, b);
-
-                // Draw it!
-                _GD.Vertex2f(_blobs[j].x, _blobs[j].y);
-            end
-
-            _GD.swap();
-        end
->>>>>>> a23903bbe46a4134d5533d89e63c8cd676f5d3a5
     end
 end
