@@ -1,5 +1,5 @@
-#define NSPRITES 5
-#define TIM 20
+#define NSPRITES 35
+#define TIME NSPRITES-i
 
 input void GD_REDRAW;
 
@@ -7,36 +7,29 @@ class Sprite with
     var byte i;        // each sprite has a different incremental "i"
 do
     var byte t = i;
-    var int v = _pgm_read_dword(_sprites + i);
-    //_Serial.println("class");
-    loop j in TIM do          
+    var u32 v = _pgm_read_dword(_sprites + i);
+    loop j in 2*TIME do          
         await GD_REDRAW;
-        _Serial.println("Class");
         _GD.Begin(_BITMAPS);
-        var int r = _pgm_read_dword(_circle + t);
+        var u32 r = _pgm_read_dword(_circle + t);	// move the sprite in a circle
         _GD.cmd32(v + r);
         t = t + 1;
     end
 end
 
-_Serial.begin(9600);
-
+var byte i = 0;
 
 par/or do
-	_Serial.println("trail1");
 	#include "gd.ceu"
 with
-	_Serial.println("trail2");
     native do
     	#include "sprites_assets.h"
 	end
-	_LOAD_ASSETS();
-	_Serial.println("trail2end");
+	_GD.copy(_sprites_assets, sizeof(_sprites_assets));
 	_GD.Clear();
 	
 	// display number of sprites
     every GD_REDRAW do
-        _GD.Clear();
         _GD.ColorRGB(0x000000);
         
 		_GD.ColorA(140);
@@ -46,13 +39,12 @@ with
 		_GD.Vertex2ii(240 + 110, 136, 0, 0);
 		_GD.RestoreContext();
 
-		_GD.cmd_number(215, 110, 31, _OPT_RIGHTX, 5);   // printing 5 always temporarily
+		_GD.cmd_number(215, 110, 31, _OPT_RIGHTX, i);  
 		_GD.cmd_text(229, 110, 31, 0, "sprites");
+		
     end
 with
-	_Serial.println("trail3");
     pool Sprite[NSPRITES] sprites;
-    var byte i = 0;   // incremental "i" for blobs
     
     // spawn a new sprite with incremental i.
     every GD_REDRAW do
@@ -62,12 +54,10 @@ with
         i = (i + 1) % NSPRITES; 
     end
 with
-	_Serial.println("trail4");
     every GD_REDRAW do
         _GD.swap();
-        //_GD.Clear();
+        _GD.Clear();
     end
 end
 
-_Serial.println("end");
 
