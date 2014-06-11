@@ -1,6 +1,33 @@
 ﻿Google Summer of Code 2014
 Weekly Updates
 
+_______________________________________________________________________________________________________
+
+10.05.14
+* What I was supposed to do in the previous week.
+  Finish Blobs and Sprites program
+
+* What I did in the previous week.
+  Finished blobs program with the help of Francisco Sir.
+  Finished sprites program.
+
+* What I'll do this week.
+  Code the kenney program.
+________________________________________________________________________________________________________
+
+03.05.14
+* What I was supposed to do in the previous week.
+  Finish reading the academic paper on Ceu, Refer the Ceu video.
+  Start coding Blobs and abstract programs.
+
+* What I did in the previous week.
+  Finished the paper and the video on Ceu.
+  Started coding Blobs.
+
+* What I'll do this week.
+  Finish blobs program.
+  Start the sprites program instead of abstract.
+
 __________________________________________________________________________________________________________
 
 27.05.14
