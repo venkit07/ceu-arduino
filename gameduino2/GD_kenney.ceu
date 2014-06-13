@@ -1,0 +1,52 @@
+#define NCLOUD 20
+input void GD_REDRAW;
+
+native do
+     byte hy[] = {36, 12, 144, 204, 216, 120, 48, 168, 192, 84, 72, 60, 24, 180, 0, 108, 228, 132, 156, 96};
+end
+
+class Cloud with
+    var int i;
+    var int x,y;        // each sprite has a different incremental "i"
+do
+    x = 16 * (_random(480) - (_CLOUD_WIDTH / 2));
+    y = 16 * _hy[i];
+    every GD_REDRAW do
+        _GD.Begin(_BITMAPS);
+        _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
+        _GD.BitmapHandle(_CLOUD_HANDLE);
+        _GD.Cell(0);
+        _GD.Vertex2f(x, y);
+        y = y + (4 + (i >> 3));
+        if (y > (16 * 272)) then
+            y = y - 16 * (272 + _CLOUD_HEIGHT);
+        end
+    end
+end
+
+par/or do
+    #include "gd.ceu"
+with
+    _GD.Clear();
+    native do
+        #include "kenney_assets.h"
+    end
+    _LOAD_ASSETS();
+    pool Cloud[NCLOUD] clouds;
+    loop i in 20 do
+        spawn Cloud in clouds with
+            _.i = i - 1;
+        end;
+    end
+    every GD_REDRAW do
+        
+    end
+with
+    every GD_REDRAW do
+        _GD.swap();
+        _GD.Clear();
+        _GD.cmd_gradient(0,   0, 0xa0a4f7,
+                     0, 272, 0xd0f4f7);
+    end
+end
+
