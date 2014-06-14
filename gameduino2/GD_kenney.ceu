@@ -1,8 +1,6 @@
-#define NCLOUD 15
-#define NHEART 15
+#define NCLOUD 10
+#define NHEART 10
 input void GD_REDRAW;
-input void GD_SUN;
-inout void GD_HEARTS;
 
 native do
     byte hy[] = {36, 12, 144, 204, 216, 120, 48, 168, 192, 84, 72, 60, 24, 180, 0, 108, 228, 132, 156, 96};
@@ -90,8 +88,6 @@ do
     end
 end
 
-var int i = 0;
-
 par/or do
     #include "gd.ceu"
 with
@@ -107,19 +103,16 @@ with
             _.i = j - 1;
         end;
     end
-    await FOREVER;
-with
-    pool Sun[1] sun;
-    await GD_SUN;
-    spawn Sun in sun;
-    await GD_HEARTS;
-    
-    pool Heart[NHEART] hearts;
-    loop j in NHEART do
-        spawn Heart in hearts with
-            _.i = j - 1;
-        end;
-    end
+
+    await 5s;
+    var Sun sun;
+
+    await 2s;
+    var int i = 0;
+    var Heart[NHEART] hearts with
+        _.i = i;
+        i = i + 1;
+    end;
 
     await FOREVER;
 with
@@ -128,16 +121,5 @@ with
         _GD.Clear();
         _GD.cmd_gradient(0,   0, 0xa0a4f7,
                      0, 272, 0xd0f4f7);
-        i = i + 1;
-        if(i == 360) then
-            async do
-                emit GD_SUN;
-            end
-        else/if(i == 480) then
-            async do
-                emit GD_HEARTS;
-            end        
-        end
     end
 end
-
