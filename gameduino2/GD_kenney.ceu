@@ -3,7 +3,6 @@
 input void GD_REDRAW;
 
 native do
-    byte hy[] = {36, 12, 144, 204, 216, 120, 48, 168, 192, 84, 72, 60, 24, 180, 0, 108, 228, 132, 156, 96};
     #define HEART_SZ  (HEART_HEIGHT + 14)
 end
 
@@ -12,7 +11,7 @@ class Cloud with
     var int x,y;
 do
     x = 16 * (_random(480) - (_CLOUD_WIDTH / 2));
-    y = 16 * _hy[i];
+    y = 16 * (_random(240) - (_CLOUD_HEIGHT / 2));
     every GD_REDRAW do
         _GD.Begin(_BITMAPS);
         _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
@@ -21,6 +20,11 @@ do
         _GD.Vertex2f(x, y);
         y = y + (4 + (i >> 3));
         if (y > (16 * 272)) then
+            if(i%2==0) then
+                x = 16 * (_random(240) - (_CLOUD_WIDTH / 2));
+            else
+                x = 16 * (_random(240, 480) - (_CLOUD_WIDTH / 2));
+            end
             y = y - 16 * (272 + _CLOUD_HEIGHT);
         end
     end
@@ -31,60 +35,65 @@ class Heart with
     var int x,y;
 do
     x = _random(16 * 480);
-    y = 16 * _hy[i];
+    y = 16 * _random(240);
+    var int deg = i * 8;
     every GD_REDRAW do
         _GD.BlendFunc(_SRC_ALPHA, _ONE_MINUS_SRC_ALPHA);
         _GD.ColorA(200);
         _GD.Begin(_BITMAPS);
         _GD.BitmapHandle(_HEART_HANDLE);
         _GD.Cell(0);
+        _GD.cmd_loadidentity();
+        _GD.cmd_translate(_F16(_HEART_SZ/2), _F16(_HEART_SZ/2));
+        if( i%2 == 0 ) then
+            _GD.cmd_rotate(_DEGREES(deg));
+        else
+            _GD.cmd_rotate(_DEGREES(-deg));
+        end
+        deg = deg + 0.25;
+        _GD.cmd_translate(_F16(-_HEART_WIDTH/2), _F16(-_HEART_HEIGHT/2));
+        _GD.cmd_setmatrix();
         _GD.Vertex2f(x - (16 * _HEART_SZ / 2), y);
         y = y + 30 + (i << 2);
         if(y > (16 * 272)) then
+            x = _random(16 * 480);
             y = y - 16 * (272 + _HEART_SZ);
         end
     end
 end
 
 class Sun with
-    var int min,max,i;
+    var int i;
 do
-    min = 300;
-    max = 600;
-    i = 0;
-    var byte dir = 1,it = 3;
+    loop j in 30 do
+        await GD_REDRAW;
+        _GD.ColorRGB(_C1B);
+        _GD.PointSize(j * 20);
+        _GD.Begin(_POINTS);
+        _GD.Vertex2f(16*240, 16*136);
+    end
+    i = 600;
+    loop j in 20 do
+        await GD_REDRAW;
+        _GD.ColorRGB(_C1B);
+        _GD.PointSize(i);
+        _GD.Begin(_POINTS);
+        _GD.Vertex2f(16*240, 16*136);
+        i = i - 20;
+    end
+    loop j in 5 do
+        await GD_REDRAW;
+        _GD.ColorRGB(_C1B);
+        _GD.PointSize(i);
+        _GD.Begin(_POINTS);
+        _GD.Vertex2f(16*240, 16*136);
+        i = i + 20;
+    end
     every GD_REDRAW do
-        // the first two trails are used for achieving the animation effect required
-        par/and do
-            if(it == 3 and dir == 0 and i == min+20) then
-                max = 500;
-                it = it - 1;
-            else/if(it == 2 and dir == 1 and i == max-20) then
-                min = 400;
-                it = it - 1;
-            else/if(it == 1 and dir == 0 and i == min+20) then
-                max = 400;
-                it = it - 1;
-                dir = 2;
-            end
-        with
-            if(dir == 1) then
-                i = i + 20;
-                if(i == max) then
-                    dir = 0;
-                end 
-            else/if(dir == 0) then
-                i = i - 20;
-                if(i == min) then
-                    dir = 1;
-                end
-            end
-        with
-            _GD.ColorRGB(_C1B);
-            _GD.PointSize(i);
-            _GD.Begin(_POINTS);
-            _GD.Vertex2f(16*240, 16*136);
-        end
+        _GD.ColorRGB(_C1B);
+        _GD.PointSize(400);
+        _GD.Begin(_POINTS);
+        _GD.Vertex2f(16*240, 16*136);
     end
 end
 
@@ -97,23 +106,51 @@ with
     end
     _LOAD_ASSETS();
     
-    pool Cloud[NCLOUD] clouds;
-    loop j in 20 do
-        spawn Cloud in clouds with
-            _.i = j - 1;
-        end;
-    end
-
+    var int i = 0;
+    var Cloud[NCLOUD] clouds with
+        _.i = i;
+        i = i + 1;
+    end;
+    
     await 5s;
     var Sun sun;
 
     await 2s;
-    var int i = 0;
+    i = 0;
     var Heart[NHEART] hearts with
         _.i = i;
         i = i + 1;
     end;
-
+    
+    await FOREVER;
+with
+    
+    var int y = 1648;
+    every GD_REDRAW do
+        _GD.RestoreContext();
+        _GD.Begin(_BITMAPS);
+        _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
+        _GD.BitmapHandle(_TILES_HANDLE);
+        var int tmp = (y >> 5) * 15;
+        
+        var byte yo = y & 31;
+        var byte ctr = 0;
+        loop j in 10 do
+            loop i in 15 do
+                var byte t = _pgm_read_byte_near(_layer1_map + tmp + ctr);
+                ctr = ctr + 1;
+                if  (t != 0) then
+                    _GD.Cell(t - 1);
+                    _GD.Vertex2f(16*32*(i), 16 * ((32*(j))-yo));
+                end
+            end
+        end
+        y = y - 1;
+        if(y == 928) then
+            break;
+        end
+    end
+    
     await FOREVER;
 with
     every GD_REDRAW do
