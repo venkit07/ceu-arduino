@@ -1,5 +1,5 @@
-#define NCLOUD 10
-#define NHEART 10
+#define NCLOUD 1
+#define NHEART 1
 input void GD_REDRAW;
 
 native do
@@ -19,6 +19,7 @@ do
         _GD.Cell(0);
         _GD.Vertex2f(x, y);
         y = y + (4 + (i >> 3));
+        
         if (y > (16 * 272)) then
             if(i%2==0) then
                 x = 16 * (_random(240) - (_CLOUD_WIDTH / 2));
@@ -27,8 +28,10 @@ do
             end
             y = y - 16 * (272 + _CLOUD_HEIGHT);
         end
+        
     end
 end
+
 
 class Heart with
     var int i;
@@ -61,6 +64,7 @@ do
         end
     end
 end
+
 
 class Sun with
     var int i;
@@ -97,6 +101,46 @@ do
     end
 end
 
+
+class Player with
+    var int i,x,y;
+do
+    var int tmp = 0;
+    every GD_REDRAW do
+      var u16 a = tmp * 100;
+
+      var u16 a2 = a << 1;
+      var u16 a3 = a2 << 1;
+      
+      if(i==0) then
+          x = 16 * 240 + _GD.rsin(16 * 120, a) + _GD.rsin(16 * 120, a2);
+          y = 16 * 136 + _GD.rsin(16 * 70, a3);         
+      else/if (i==1) then
+      x = 16 * 240 + _GD.rsin(16 * 240, a);
+      y = 16 * 100 + _GD.rsin(16 * 36, a2);
+      else
+      x = 16 * 240 + _GD.rsin(16 * 240, a2);
+      y = 16 * 135 + _GD.rsin(16 * 10, a) + _GD.rsin(16 * 18, a3);
+      end
+      
+      _GD.ColorRGB(0xffffff);
+      _GD.ColorA(0xff);
+      _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
+      _GD.BitmapHandle(_PLAYER1_HANDLE);
+      _GD.Begin(_BITMAPS);
+      _GD.cmd_loadidentity();
+      _GD.cmd_translate(_F16(_PLAYER1_SIZE / 2),_F16(_PLAYER1_SIZE / 2));
+      _GD.cmd_rotate(a + i * 0x7000);
+      _GD.cmd_translate(_F16(-_PLAYER1_WIDTH / 2),_F16(-_PLAYER1_HEIGHT / 2));
+      _GD.cmd_setmatrix();
+      _GD.Cell(i);
+      _GD.Vertex2f(x - (16 * _PLAYER1_SIZE / 2),
+                  y - (16 * _PLAYER1_SIZE / 2));
+      tmp = tmp + 1;
+  end
+end
+
+
 par/or do
     #include "gd.ceu"
 with
@@ -107,6 +151,7 @@ with
     _LOAD_ASSETS();
     
     var int i = 0;
+    
     var Cloud[NCLOUD] clouds with
         _.i = i;
         i = i + 1;
@@ -117,6 +162,7 @@ with
 
     await 2s;
     i = 0;
+    
     var Heart[NHEART] hearts with
         _.i = i;
         i = i + 1;
@@ -126,6 +172,7 @@ with
 with
     
     var int y = 1648;
+    
     every GD_REDRAW do
         _GD.RestoreContext();
         _GD.Begin(_BITMAPS);
@@ -146,11 +193,19 @@ with
             end
         end
         y = y - 1;
+        
         if(y == 928) then
             break;
         end
     end
     
+    await FOREVER;
+with
+    var int i = 0;
+    var Player[3] player with
+        _.i = i;
+        i = i + 1;
+    end;
     await FOREVER;
 with
     every GD_REDRAW do
