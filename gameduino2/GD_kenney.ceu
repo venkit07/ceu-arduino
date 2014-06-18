@@ -1,5 +1,6 @@
-#define NCLOUD 1
-#define NHEART 1
+#define NCLOUD 0
+#define NHEART 0
+#define NTRAIL 25
 
 input void GD_REDRAW;
 
@@ -7,23 +8,26 @@ native do
     #define HEART_SZ  (HEART_HEIGHT + 14)
 end
 
-class Cloud with
-    var int i;		/// is "i" needed after randomization?
-    var int x,y;        /// why in the interface?
-do
-    x = 16 * (_random(480) - (_CLOUD_WIDTH / 2));
-    y = 16 * (_random(240) - (_CLOUD_HEIGHT / 2));
 
+class Cloud with
+do
+    var int x = 16 * (_random(480) - (_CLOUD_WIDTH / 2));
+    var int y = 16 * (_random(240) - (_CLOUD_HEIGHT / 2));
+    var byte vel = _random(20);
+    var byte lum = 128 + 5 * vel;
     every GD_REDRAW do
         _GD.Begin(_BITMAPS);
         _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
         _GD.BitmapHandle(_CLOUD_HANDLE);
         _GD.Cell(0);
+        _GD.ColorA(lum);
+        _GD.ColorRGB(lum, lum, lum);
+        
         _GD.Vertex2f(x, y);
-        y = y + (4 + (i >> 3));
+        y = y + (4 + (vel >> 3));
         
         if (y > (16 * 272)) then
-            if(i%2==0) then
+            if(vel%2==0) then
                 x = 16 * (_random(240) - (_CLOUD_WIDTH / 2));
             else
                 x = 16 * (_random(240, 480) - (_CLOUD_WIDTH / 2));
@@ -34,12 +38,12 @@ do
 end
 
 class Heart with
-    var int i;          /// is "i" needed after randomization?
-    var int x,y;        /// why in the interface?
 do
-    x = _random(16 * 480);
-    y = 16 * _random(240);
-    var int deg = i * 8;
+    await 7s;
+    var int x = _random(16 * 480);
+    var int y = 16 * _random(240);
+    var int deg = _random(20) * 8;
+    var byte dir = _random(0,1);
     every GD_REDRAW do
         _GD.BlendFunc(_SRC_ALPHA, _ONE_MINUS_SRC_ALPHA);
         _GD.ColorA(200);
@@ -48,7 +52,7 @@ do
         _GD.Cell(0);
         _GD.cmd_loadidentity();
         _GD.cmd_translate(_F16(_HEART_SZ/2), _F16(_HEART_SZ/2));
-        if( i%2 == 0 ) then
+        if( dir%2 == 0 ) then
             _GD.cmd_rotate(_DEGREES(deg));
         else
             _GD.cmd_rotate(_DEGREES(-deg));
@@ -57,7 +61,7 @@ do
         _GD.cmd_translate(_F16(-_HEART_WIDTH/2), _F16(-_HEART_HEIGHT/2));
         _GD.cmd_setmatrix();
         _GD.Vertex2f(x - (16 * _HEART_SZ / 2), y);
-        y = y + 30 + (i << 2);
+        y = y + 30 + (deg << 4);
         if(y > (16 * 272)) then
             x = _random(16 * 480);
             y = y - 16 * (272 + _HEART_SZ);
@@ -66,13 +70,10 @@ do
 end
 
 class Sun with
-    var int i;      /// unused? (no problem to have an empty interface)
 do
-    await 5s;       /// moved this to the class (see below)
-    var int size;   /// "size" is a much better name
-
-    /// the redrawing operations are the same (with the variable size)
-    /// put it in parallel with the operations that change the size
+    await 5s;     
+    var int size;   
+    
     par do
         loop j in 30 do
             size = j * 20;
@@ -97,46 +98,85 @@ do
     end
 end
 
+class Trail with
+    var int tx,ty;
+    var u32 color;
+do
+    var int size = 192;
+    loop j in 30 do
+        await GD_REDRAW;
+        _GD.BlendFunc(_SRC_ALPHA, _ONE_MINUS_SRC_ALPHA);
+        _GD.Begin(_POINTS);
+        _GD.ColorA(0x90);
+        _GD.ColorRGB(color);
+        _GD.PointSize(size);
+        _GD.Vertex2f(tx, ty);
+        size = size - 1;
+        ty = ty + 12;
+    end
+end
+
 
 class Player with
     var int i;
-    var int x,y;        /// why in the interface?
 do
-    var int tmp = 0;
+    var int cntr = 0,x,y;
+    pool Trail[NTRAIL] trails;
+    
     every GD_REDRAW do
-      /// TODO: block indentation?
       /// the variables names have no sense
-      var u16 a = tmp * 100;
+        var u16 a = cntr * 100;
 
-      var u16 a2 = a << 1;
-      var u16 a3 = a2 << 1;
+        var u16 a2 = a << 1;
+        var u16 a3 = a2 << 1;
       
-      if(i==0) then
-          x = 16 * 240 + _GD.rsin(16 * 120, a) + _GD.rsin(16 * 120, a2);
-          y = 16 * 136 + _GD.rsin(16 * 70, a3);         
-      else/if (i==1) then
-      x = 16 * 240 + _GD.rsin(16 * 240, a);
-      y = 16 * 100 + _GD.rsin(16 * 36, a2);
-      else
-      x = 16 * 240 + _GD.rsin(16 * 240, a2);
-      y = 16 * 135 + _GD.rsin(16 * 10, a) + _GD.rsin(16 * 18, a3);
-      end
+        if(i==0) then
+            x = 16 * 240 + _GD.rsin(16 * 120, a) + _GD.rsin(16 * 120, a2);
+            y = 16 * 136 + _GD.rsin(16 * 70, a3); 
+            if ((cntr & 3) == 0) then
+                spawn Trail in trails with
+                    _.tx = x;
+                    _.ty = y;
+                    _.color = 0x8bcfba;
+                end;        
+            end
+        else/if (i==1) then
+            x = 16 * 240 + _GD.rsin(16 * 240, a);
+            y = 16 * 100 + _GD.rsin(16 * 36, a2);
+            if ((cntr & 3) == 0) then
+                spawn Trail in trails with
+                    _.tx = x;
+                    _.ty = y;
+                    _.color = 0x8db5e7;
+                end;        
+            end
+        else
+            x = 16 * 240 + _GD.rsin(16 * 240, a2);
+            y = 16 * 135 + _GD.rsin(16 * 10, a) + _GD.rsin(16 * 18, a3);
+            if ((cntr & 3) == 0) then
+                spawn Trail in trails with
+                    _.tx = x;
+                    _.ty = y;
+                    _.color = 0xf19cb7;
+                end;        
+            end
+        end
       
-      _GD.ColorRGB(0xffffff);
-      _GD.ColorA(0xff);
-      _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
-      _GD.BitmapHandle(_PLAYER1_HANDLE);
-      _GD.Begin(_BITMAPS);
-      _GD.cmd_loadidentity();
-      _GD.cmd_translate(_F16(_PLAYER1_SIZE / 2),_F16(_PLAYER1_SIZE / 2));
-      _GD.cmd_rotate(a + i * 0x7000);
-      _GD.cmd_translate(_F16(-_PLAYER1_WIDTH / 2),_F16(-_PLAYER1_HEIGHT / 2));
-      _GD.cmd_setmatrix();
-      _GD.Cell(i);
-      _GD.Vertex2f(x - (16 * _PLAYER1_SIZE / 2),
-                  y - (16 * _PLAYER1_SIZE / 2));
-      tmp = tmp + 1;
-  end
+        _GD.ColorRGB(0xffffff);
+        _GD.ColorA(0xff);
+        _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
+        _GD.BitmapHandle(_PLAYER1_HANDLE);
+        _GD.Begin(_BITMAPS);
+        _GD.cmd_loadidentity();
+        _GD.cmd_translate(_F16(_PLAYER1_SIZE / 2),_F16(_PLAYER1_SIZE / 2));
+        _GD.cmd_rotate(a + i * 0x7000);
+        _GD.cmd_translate(_F16(-_PLAYER1_WIDTH / 2),_F16(-_PLAYER1_HEIGHT / 2));
+        _GD.cmd_setmatrix();
+        _GD.Cell(i);
+        _GD.Vertex2f(x - (16 * _PLAYER1_SIZE / 2),
+                     y - (16 * _PLAYER1_SIZE / 2));
+        tmp = tmp + 1;
+    end
 end
 
 
@@ -154,36 +194,24 @@ with
     
     var Sun sun;
     
-    var int i = 0;
-    var Cloud[NCLOUD] clouds with
-        _.i = i;
-        i = i + 1;
-    end;
+    var Cloud[NCLOUD] clouds;
     
-    /// moved to this trail (dont need to be in a parallel trail)
     var int i = 0;
     var Player[3] player with
         _.i = i;
         i = i + 1;
     end;
 
-    await 2s;
-
     i = 0;
-    var Heart[NHEART] hearts with
-        _.i = i;
-        i = i + 1;
-    end;
+    var Heart[NHEART] hearts;
     
     await FOREVER;
 with
     
-    /// the variables names have no sense
-    /// a lot of magical numbers
-
     var int y = 1648;
     
     every GD_REDRAW do
+        
         _GD.RestoreContext();
         _GD.Begin(_BITMAPS);
         _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
@@ -198,19 +226,21 @@ with
                 ctr = ctr + 1;
                 if  (t != 0) then
                     _GD.Cell(t - 1);
-                    _GD.Vertex2f(16*32*(i), 16 * ((32*(j))-yo));
+                    _GD.Vertex2f(16 * 32 * i, 16 * ((32 * j) - yo));
                 end
             end
         end
         y = y - 1;
         
         if(y == 928) then
-            break;    /// why?
+            break;    /// why? => I plan to loop the whole program like the original demo. I'll be putting a loop when this trail ends.
+                        //   The map isn't infinite too. So going much beyond this point generates weird outputs on the screen since they are undefined.
         end
-
         _GD.swap();
         _GD.Clear();
         _GD.cmd_gradient(0,   0, 0xa0a4f7,
-                     0, 272, 0xd0f4f7);
+                         0, 272, 0xd0f4f7);
     end
+    
+    await FOREVER;
 end
