@@ -1,9 +1,21 @@
 ﻿Google Summer of Code 2014
 Weekly Updates
 
+
+17.06.14
+* What I was supposed to do in the previous week.
+  Code the kenney program.
+
+* What I did in the previous week.
+  Worked on the kenney program. Sky, clouds, hearts, players layers done. Player trails and sunshine to do.
+
+* What I'll do this week.
+  Finish the kenney program.
+  Start working on Frogger game.
+  
 _______________________________________________________________________________________________________
 
-10.05.14
+10.06.14
 * What I was supposed to do in the previous week.
   Finish Blobs and Sprites program
 
@@ -15,7 +27,7 @@ ________________________________________________________________________________
   Code the kenney program.
 ________________________________________________________________________________________________________
 
-03.05.14
+03.06.14
 * What I was supposed to do in the previous week.
   Finish reading the academic paper on Ceu, Refer the Ceu video.
   Start coding Blobs and abstract programs.
