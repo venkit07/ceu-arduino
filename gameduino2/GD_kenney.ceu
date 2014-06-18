@@ -1,5 +1,6 @@
 #define NCLOUD 1
 #define NHEART 1
+
 input void GD_REDRAW;
 
 native do
@@ -7,11 +8,12 @@ native do
 end
 
 class Cloud with
-    var int i;
-    var int x,y;
+    var int i;		/// is "i" needed after randomization?
+    var int x,y;        /// why in the interface?
 do
     x = 16 * (_random(480) - (_CLOUD_WIDTH / 2));
     y = 16 * (_random(240) - (_CLOUD_HEIGHT / 2));
+
     every GD_REDRAW do
         _GD.Begin(_BITMAPS);
         _GD.BlendFunc(_ONE, _ONE_MINUS_SRC_ALPHA);
@@ -28,14 +30,12 @@ do
             end
             y = y - 16 * (272 + _CLOUD_HEIGHT);
         end
-        
     end
 end
 
-
 class Heart with
-    var int i;
-    var int x,y;
+    var int i;          /// is "i" needed after randomization?
+    var int x,y;        /// why in the interface?
 do
     x = _random(16 * 480);
     y = 16 * _random(240);
@@ -65,48 +65,47 @@ do
     end
 end
 
-
 class Sun with
-    var int i;
+    var int i;      /// unused? (no problem to have an empty interface)
 do
-    loop j in 30 do
-        await GD_REDRAW;
-        _GD.ColorRGB(_C1B);
-        _GD.PointSize(j * 20);
-        _GD.Begin(_POINTS);
-        _GD.Vertex2f(16*240, 16*136);
-    end
-    i = 600;
-    loop j in 20 do
-        await GD_REDRAW;
-        _GD.ColorRGB(_C1B);
-        _GD.PointSize(i);
-        _GD.Begin(_POINTS);
-        _GD.Vertex2f(16*240, 16*136);
-        i = i - 20;
-    end
-    loop j in 5 do
-        await GD_REDRAW;
-        _GD.ColorRGB(_C1B);
-        _GD.PointSize(i);
-        _GD.Begin(_POINTS);
-        _GD.Vertex2f(16*240, 16*136);
-        i = i + 20;
-    end
-    every GD_REDRAW do
-        _GD.ColorRGB(_C1B);
-        _GD.PointSize(400);
-        _GD.Begin(_POINTS);
-        _GD.Vertex2f(16*240, 16*136);
+    await 5s;       /// moved this to the class (see below)
+    var int size;   /// "size" is a much better name
+
+    /// the redrawing operations are the same (with the variable size)
+    /// put it in parallel with the operations that change the size
+    par do
+        loop j in 30 do
+            size = j * 20;
+            await GD_REDRAW;
+        end
+        loop j in 20 do
+            size = size - 20;
+            await GD_REDRAW;
+        end
+        loop j in 5 do
+            size = size + 20;
+            await GD_REDRAW;
+        end
+        size = 400;
+    with
+        every GD_REDRAW do
+            _GD.ColorRGB(_C1B);
+            _GD.PointSize(size);
+            _GD.Begin(_POINTS);
+            _GD.Vertex2f(16*240, 16*136);
+        end
     end
 end
 
 
 class Player with
-    var int i,x,y;
+    var int i;
+    var int x,y;        /// why in the interface?
 do
     var int tmp = 0;
     every GD_REDRAW do
+      /// TODO: block indentation?
+      /// the variables names have no sense
       var u16 a = tmp * 100;
 
       var u16 a2 = a << 1;
@@ -149,20 +148,28 @@ with
         #include "kenney_assets.h"
     end
     _LOAD_ASSETS();
+
+    /// Sun, Clouds, Players, Hearts
+    /// The declaration order is important: Sun redraws first (behind all others)
+    
+    var Sun sun;
     
     var int i = 0;
-    
     var Cloud[NCLOUD] clouds with
         _.i = i;
         i = i + 1;
     end;
     
-    await 5s;
-    var Sun sun;
+    /// moved to this trail (dont need to be in a parallel trail)
+    var int i = 0;
+    var Player[3] player with
+        _.i = i;
+        i = i + 1;
+    end;
 
     await 2s;
+
     i = 0;
-    
     var Heart[NHEART] hearts with
         _.i = i;
         i = i + 1;
@@ -171,6 +178,9 @@ with
     await FOREVER;
 with
     
+    /// the variables names have no sense
+    /// a lot of magical numbers
+
     var int y = 1648;
     
     every GD_REDRAW do
@@ -195,20 +205,9 @@ with
         y = y - 1;
         
         if(y == 928) then
-            break;
+            break;    /// why?
         end
-    end
-    
-    await FOREVER;
-with
-    var int i = 0;
-    var Player[3] player with
-        _.i = i;
-        i = i + 1;
-    end;
-    await FOREVER;
-with
-    every GD_REDRAW do
+
         _GD.swap();
         _GD.Clear();
         _GD.cmd_gradient(0,   0, 0xa0a4f7,
