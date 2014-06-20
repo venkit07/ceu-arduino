@@ -1,0 +1,202 @@
+input void GD_REDRAW;
+
+
+
+class Sprite with
+    var byte add, y, anim;
+    var float mult;
+do
+    var u16 cntr = 0;
+    var byte x;
+    y = y - 8;
+    par/or do
+        every GD_REDRAW do
+            x = cntr * mult + add - 16;
+            cntr = cntr + 1;
+        end
+    with
+        every GD_REDRAW do
+            if (x > 224) then
+                _GD.Cell(anim);
+                _GD.BitmapHandle(_SPRITES_HANDLE);
+                _GD.Vertex2f(16 * (x - 256), 16 * y);
+            else
+                _GD.Begin(_BITMAPS);
+                _GD.Vertex2ii(x, y, _SPRITES_HANDLE, anim);
+            end
+        end
+    end
+end
+
+par/or do
+    #include "gd.ceu"
+with
+    native do
+        #include "frogger_assets.h"
+    end
+    native do
+        static void sprite(byte x, byte y, byte anim, uint16_t rot = 0xffff)
+        {
+            x -= 16;
+            y -= 8;
+            if (rot != 0xffff) {
+                GD.cmd_loadidentity();
+                GD.cmd_translate(F16(8),F16(8));
+                GD.cmd_rotate(rot);
+                GD.cmd_translate(F16(-8),F16(-8));
+                GD.cmd_setmatrix();
+            }
+            if (x > 224) {
+                GD.Cell(anim);
+                GD.Vertex2f(16 * (x - 256), 16 * y);
+            } else {
+                GD.Vertex2ii(x, y, SPRITES_HANDLE, anim);
+            }
+        }
+    end
+    _LOAD_ASSETS();
+    _GD.Clear();
+    
+    every GD_REDRAW do
+        
+        _GD.Tag(1);
+        _GD.BitmapHandle(_SPRITES_HANDLE);
+        _GD.SaveContext();
+        _GD.ScissorSize(224, 256);
+        _GD.Begin(_BITMAPS);
+        _GD.Vertex2ii(0, 0, _BACKGROUND_HANDLE, 0);   // Background bitmap
+        
+    end
+    
+    await FOREVER; 
+with
+    /*
+    var Sprite car1 with
+        _.mult = -1;
+        _.add = 0;
+        _.anim = 3;
+        _.y = 216;
+    end;
+    
+    var Sprite car2 with
+        _.mult = -1;
+        _.add = 128;
+        _.anim = 3;
+        _.y = 216;
+    end;
+    
+    var Sprite dozer1 with
+        _.mult = 1;
+        _.add = 0;
+        _.anim = 4;
+        _.y = 200;
+    end;
+    
+    var Sprite dozer2 with
+        _.mult = 1;
+        _.add = 50;
+        _.anim = 4;
+        _.y = 200;
+    end;
+    
+    var Sprite dozer3 with
+        _.mult = 1;
+        _.add = 150;
+        _.anim = 4;
+        _.y = 200;
+    end;
+    
+    var Sprite purple1 with
+        _.mult = -1;
+        _.add = 0;
+        _.anim = 7;
+        _.y = 184;
+    end;
+    
+    var Sprite purple2 with
+        _.mult = -1;
+        _.add = 75;
+        _.anim = 7;
+        _.y = 184;
+    end;
+    
+    var Sprite purple3 with
+        _.mult = -1;
+        _.add = 150;
+        _.anim = 7;
+        _.y = 184;
+    end;
+    
+     var Sprite race1 with
+        _.mult = 2;
+        _.add = 0;
+        _.anim = 8;
+        _.y = 168;
+    end;
+    
+     var Sprite truck1 with
+        _.mult = -1;
+        _.add = 0;
+        _.anim = 5;
+        _.y = 152;
+    end;
+    
+    var Sprite truck2 with
+        _.mult = -1;
+        _.add = 16;
+        _.anim = 6;
+        _.y = 152;
+    end;
+    
+    var Sprite truck3 with
+        _.mult = -1;
+        _.add = 100;
+        _.anim = 5;
+        _.y = 152;
+    end;
+    
+    var Sprite truck4 with
+        _.mult = -1;
+        _.add = 116;
+        _.anim = 6;
+        _.y = 152;
+    end;
+    */
+    var int t = 0;
+    every GD_REDRAW do
+    
+        _GD.Tag(2);
+        _GD.AlphaFunc(GREATER, 0); // on road, don't tag transparent pixels
+        // Yellow cars
+        
+        _sprite(-t,       216, 3);
+        _sprite(-t + 128, 216, 3);
+
+        // Dozers
+        _sprite(t, 200, 4);
+        _sprite(t + 50, 200, 4);
+        _sprite(t + 150, 200, 4);
+
+        // Purple cars
+        _sprite(-t,       184, 7);
+        _sprite(-t + 75,  184, 7);
+        _sprite(-t + 150, 184, 7);
+
+        // Green and white racecars
+        _sprite(2 * t,    168, 8);
+
+        // Trucks
+        _sprite(-t/2,       152, 5);
+        _sprite(-t/2 + 16,  152, 6);
+        _sprite(-t/2 + 100, 152, 5);
+        _sprite(-t/2 + 116, 152, 6);
+        
+        t = t + 1;
+    end
+    await FOREVER;
+with
+    every GD_REDRAW do
+        _GD.swap();
+        _GD.Clear();
+    end
+end
