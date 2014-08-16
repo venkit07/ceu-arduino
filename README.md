@@ -59,4 +59,4 @@ The demos are:
   - Nightstrike - The nightstrike game on gameduino 2.
   - Manicminer  - The manicminer game on gameduino 2.
 
-  **2.5 Whatever**
+**2.4 Whatever**
