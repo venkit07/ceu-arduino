@@ -7,12 +7,13 @@ Student - Venkiteswaran R
 Mentor - Francisco Sant'anna
 
 #### 1. Project Introduction
-```
+
 During this year's Google Summer of Code, I worked on the project "Porting Gameduino demos to the Programming Language Céu" with Lablua organisation, Rio de Janeiro under the mentorship of Francisco Sant'anna.
 The aim of this project was to port existing Gameduino 2 demos into the Céu programming language.
 The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. 
+
 Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
-```
+
 #### 2. Technical Aspects
   **2.1 Céu**
 
