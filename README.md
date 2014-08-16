@@ -12,7 +12,7 @@ The aim of this project was to port existing Gameduino 2 demos into the Céu pro
 The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
 
 #### 2. Technical Aspects
-    I. Céu
+I. Céu
         Céu is a programming language developed using Lua. 
         Céu is a concurrent and reactive programming language that offers a safer and higher-level alternative to C.
         Céu supports synchronous concurrency with shared memory and deterministic execution. 
@@ -37,7 +37,7 @@ Gameduino 2 was the result of a successfull Kickstarter project from October 201
 III. Learning the samples
         The Gameduino 2 comes with 13 demos, each of which covers different aspects required to develop games for gameduino 2. They also give an introduction regarding the different functions that are part of the Gameduino 2 library. The demos as such are uncommented but mostly easy to understand. The gameduino 2 book that comes with the Gameduino 2 device describes all the features of the device and gives enough desciption of the methods defined in the Gameduino 2 library. 
         
-        Before porting the examples to Céu, I had to understand the existing games. This was done by running the existing code by commenting the different modules one by one to understand their function. The Gameduino 2 book was particularly helpful in this stage. The Gameduino 2 official forum is very active and came to my rescue very often during the project. 
+Before porting the examples to Céu, I had to understand the existing games. This was done by running the existing code by commenting the different modules one by one to understand their function. The Gameduino 2 book was particularly helpful in this stage. The Gameduino 2 official forum is very active and came to my rescue very often during the project. 
 
 The demos are:
         Hello World - Prints Hello World on screen.
