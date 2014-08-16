@@ -1,9 +1,9 @@
 # Google Summer of Code'14 Report
 
-## Porting Gameduino demos to the Programming Language Céu - 19.05.14 to 18.08.14
+## Porting Gameduino demos to Céu - 19.05.14 to 18.08.14
 
-### Student - Venkiteswaran R
-### Mentor - Francisco Sant'anna
+Student - Venkiteswaran R
+Mentor - Francisco Sant'anna
 
 1. Project Introduction
     During this year's Google Summer of Code, I worked on the project "Porting Gameduino demos to the Programming Language Céu" with Lablua organisation, Rio de Janeiro under the mentorship of Francisco Sant'anna.
