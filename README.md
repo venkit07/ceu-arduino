@@ -59,4 +59,18 @@ The demos are:
   - Nightstrike - The nightstrike game on gameduino 2.
   - Manicminer  - The manicminer game on gameduino 2.
 
-**2.4 Whatever**
+**2.4 Porting easier demos to Céu**
+
+The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
+
+**2.5 Working on the harder games**
+
+//TODO
+
+####3. Timeline and Completed Games
+
+// TODO
+
+####4. Experience & Takeaways
+
+// TODO
