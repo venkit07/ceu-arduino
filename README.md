@@ -37,27 +37,29 @@ Gameduino 2 is a shield that adds a bright 4.3 inch touchscreen, an embedded GPU
 
 Gameduino 2 was the result of a successfull Kickstarter project from October 2013 - November 2013 and was developed by James Bowman.
 
-III. Learning the samples
-        The Gameduino 2 comes with 13 demos, each of which covers different aspects required to develop games for gameduino 2. They also give an introduction regarding the different functions that are part of the Gameduino 2 library. The demos as such are uncommented but mostly easy to understand. The gameduino 2 book that comes with the Gameduino 2 device describes all the features of the device and gives enough desciption of the methods defined in the Gameduino 2 library. 
+  **2.3 Learning the samples**
+
+The Gameduino 2 comes with 13 demos, each of which covers different aspects required to develop games for gameduino 2. They also give an introduction regarding the different functions that are part of the Gameduino 2 library. The demos as such are uncommented but mostly easy to understand. The gameduino 2 book that comes with the Gameduino 2 device describes all the features of the device and gives enough desciption of the methods defined in the Gameduino 2 library. 
         
 Before porting the examples to Céu, I had to understand the existing games. This was done by running the existing code by commenting the different modules one by one to understand their function. The Gameduino 2 book was particularly helpful in this stage. The Gameduino 2 official forum is very active and came to my rescue very often during the project. 
 
 The demos are:
-        Hello World - Prints Hello World on screen.
-        Blobs       - Program to introduce touch
-        Sprites     - Program to introduce loading and displaying the game sprites on screen.
-        Abstract    - Program that shows some touch features
-        Viewer      - Program to load image from SD card and diplay on screen.
-        Cobra       - Program that 
-        Jnr
-        Kenney      - Program that shows dynamic loading of game elements.       
-        Chess       - Self played chess AI based on an open source chess library.
-        Frogger     - The famous Frogger game on Gameduino 2.
-        Invaders    - The invaders game on Gameduino 2.
-        Nightstrike - The nightstrike game on gameduino 2.
-        Manic miner - The manic miner game on gameduino 2.
+  - Hello World - Prints Hello World on screen.
+  - Blobs       - Program to introduce touch
+  - Sprites     - Program to introduce loading and displaying the game sprites on screen.
+  - Abstract    - Program that shows some touch features
+  - Viewer      - Program to load image from SD card and diplay on screen.
+  - Cobra       - Program that 
+  - Jnr
+  - Kenney      - Program that shows dynamic loading of game elements.       
+  - Chess       - Self played chess AI based on an open source chess library.
+  - Frogger     - The famous Frogger game on Gameduino 2.
+  - Invaders    - The invaders game on Gameduino 2.
+  - Nightstrike - The nightstrike game on gameduino 2.
+  - Manic miner - The manic miner game on gameduino 2.
 
-IV. Porting easier examples to Céu
+  **2.4 Porting easier examples to Céu**
+  
         The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
         The sprites program
 
