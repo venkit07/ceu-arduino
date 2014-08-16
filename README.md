@@ -56,11 +56,4 @@ The demos are:
   - Frogger     - The famous Frogger game on Gameduino 2.
   - Invaders    - The invaders game on Gameduino 2.
   - Nightstrike - The nightstrike game on gameduino 2.
-  - Manic miner - The manic miner game on gameduino 2.
-  
-  **2.4 Porting easier examples to Céu**
-  
-The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
-The sprites program
-
-V. Working on harder games  
+  - Manicminer  - The manicminer game on gameduino 2.
