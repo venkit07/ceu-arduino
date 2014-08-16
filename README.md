@@ -46,12 +46,12 @@ Before porting the examples to Céu, I had to understand the existing games. Thi
 
 The demos are:
   - Hello World - Prints Hello World on screen.
-  - Blobs       - Program to introduce touch
+  - Blobs       - Program to introduce touch.
   - Sprites     - Program to introduce loading and displaying the game sprites on screen.
-  - Abstract    - Program that shows some touch features
+  - Abstract    - Program that shows some touch features.
   - Viewer      - Program to load image from SD card and diplay on screen.
-  - Cobra       - Program that 
-  - Jnr
+  - Cobra       - Program that draws a shape using geometric functions.
+  - Jnr         - Program that implements scroll bar.
   - Kenney      - Program that shows dynamic loading of game elements.       
   - Chess       - Self played chess AI based on an open source chess library.
   - Frogger     - The famous Frogger game on Gameduino 2.
@@ -63,9 +63,10 @@ The demos are:
 
 The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
 
+// TODO
 **2.5 Working on the harder games**
 
-//TODO
+// TODO
 
 ####3. Timeline and Completed Games
 
