@@ -12,7 +12,7 @@ The aim of this project was to port existing Gameduino 2 demos into the Céu pro
 The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
 
 #### 2. Technical Aspects
-I. Céu
+> I. Céu
         Céu is a programming language developed using Lua. 
         Céu is a concurrent and reactive programming language that offers a safer and higher-level alternative to C.
         Céu supports synchronous concurrency with shared memory and deterministic execution. 
