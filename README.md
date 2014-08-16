@@ -9,10 +9,9 @@ Mentor - Francisco Sant'anna
 #### 1. Project Introduction
 
 During this year's Google Summer of Code, I worked on the project "Porting Gameduino demos to the Programming Language Céu" with Lablua organisation, Rio de Janeiro under the mentorship of Francisco Sant'anna.
-The aim of this project was to port existing Gameduino 2 demos into the Céu programming language.
-The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. 
 
-Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
+The aim of this project was to port existing Gameduino 2 demos into the Céu programming language.
+The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
 
 #### 2. Technical Aspects
   **2.1 Céu**
@@ -25,7 +24,7 @@ Céu has been developed to be compatible with many platforms including Arduino a
 Céu is pretty much easy to learn once we get a hold of it. I learnt most of it on the go with the guidance of my mentor. The manual of the language given in the website is very helpful and decribes most of the aspects of the language and its usage. Still, parts of the manual is still under development. Those parts were described to me by my mentor. There are a lot of programs written in Céu for SDL and arduino platforms which are sufficiently documented and are helpful to learn the concepts not described in the manual.
 
   **2.2 Gameduino 2**
-        
+
 Gameduino 2 is a device pluggable into Arduino to play games. 
 Gameduino 2 is a shield that adds a bright 4.3 inch touchscreen, an embedded GPU, headphone jack, accelerometer and microSD slot to Arduino - or anything else with an SPI interface.
   - video output is 480x272 pixels in 24-bit color
@@ -42,7 +41,7 @@ Gameduino 2 was the result of a successfull Kickstarter project from October 201
   **2.3 Learning the samples**
 
 The Gameduino 2 comes with 13 demos, each of which covers different aspects required to develop games for gameduino 2. They also give an introduction regarding the different functions that are part of the Gameduino 2 library. The demos as such are uncommented but mostly easy to understand. The gameduino 2 book that comes with the Gameduino 2 device describes all the features of the device and gives enough desciption of the methods defined in the Gameduino 2 library. 
-        
+
 Before porting the examples to Céu, I had to understand the existing games. This was done by running the existing code by commenting the different modules one by one to understand their function. The Gameduino 2 book was particularly helpful in this stage. The Gameduino 2 official forum is very active and came to my rescue very often during the project. 
 
 The demos are:
@@ -59,3 +58,5 @@ The demos are:
   - Invaders    - The invaders game on Gameduino 2.
   - Nightstrike - The nightstrike game on gameduino 2.
   - Manicminer  - The manicminer game on gameduino 2.
+
+  **2.5 Whatever**
