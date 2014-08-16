@@ -7,6 +7,8 @@ Student - Venkiteswaran R
 Mentor - Francisco Sant'anna
 
 #### 1. Project Introduction
+  1. Yo
+  2. How
 #### 2. Tech
 #### 3. Cult
 
