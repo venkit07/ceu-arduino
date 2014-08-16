@@ -12,8 +12,7 @@ The aim of this project was to port existing Gameduino 2 demos into the Céu pro
 The existing demos, written in native C, cover all the essential aspects required to develop a game for the Gameduino 2 platform. This project was done to demonstrate the usage of the Céu programming language in developing programs for reactive applications. We hope this project would enable new developers to easily develop new games on Gameduino 2 using Céu. Moreover, since Céu is still under development, this project was done to understand through practical applications the advantages as well as the limitations of the language.
 
 #### 2. Technical Aspects
-
-**I. Céu**
+  **I. Céu**
 
 Céu is a programming language developed using Lua. 
 Céu is a concurrent and reactive programming language that offers a safer and higher-level alternative to C.
@@ -22,7 +21,7 @@ Céu has a small memory footprint and integrates seamlessly with C. The two main
 Céu has been developed to be compatible with many platforms including Arduino and Android. The Céu-in-a-Box environment gives an easy to use readily avaialbe environment.
 Céu is pretty much easy to learn once we get a hold of it. I learnt most of it on the go with the guidance of my mentor. The manual of the language given in the website is very helpful and decribes most of the aspects of the language and its usage. Still, parts of the manual is still under development. Those parts were described to me by my mentor. There are a lot of programs written in Céu for SDL and arduino platforms which are sufficiently documented and are helpful to learn the concepts not described in the manual.
 
-**II. Gameduino 2**
+  **II. Gameduino 2**
         
 Gameduino 2 is a device pluggable into Arduino to play games. 
 Gameduino 2 is a shield that adds a bright 4.3 inch touchscreen, an embedded GPU, headphone jack, accelerometer and microSD slot to Arduino - or anything else with an SPI interface.
