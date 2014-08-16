@@ -20,7 +20,7 @@ The existing demos, written in native C, cover all the essential aspects require
         Céu has been developed to be compatible with many platforms including Arduino and Android. The Céu-in-a-Box environment gives an easy to use readily avaialbe environment.
         Céu is pretty much easy to learn once we get a hold of it. I learnt most of it on the go with the guidance of my mentor. The manual of the language given in the website is very helpful and decribes most of the aspects of the language and its usage. Still, parts of the manual is still under development. Those parts were described to me by my mentor. There are a lot of programs written in Céu for SDL and arduino platforms which are sufficiently documented and are helpful to learn the concepts not described in the manual.
 
-    II. Gameduino 2
+II. Gameduino 2
         Gameduino 2 is a device pluggable into Arduino to play games. 
         Gameduino 2 is a shield that adds a bright 4.3 inch touchscreen, an embedded GPU, headphone jack, accelerometer and microSD slot to Arduino - or anything else with an SPI interface.
          - video output is 480x272 pixels in 24-bit color
@@ -32,14 +32,14 @@ The existing demos, written in native C, cover all the essential aspects require
          - JPEG loading in hardware
          - built-in rendering of gradients, text, dials and buttons
 
-           Gameduino 2 was the result of a successfull Kickstarter project from October 2013 - November 2013 and was developed by James Bowman.
+Gameduino 2 was the result of a successfull Kickstarter project from October 2013 - November 2013 and was developed by James Bowman.
 
-    III. Learning the samples
+III. Learning the samples
         The Gameduino 2 comes with 13 demos, each of which covers different aspects required to develop games for gameduino 2. They also give an introduction regarding the different functions that are part of the Gameduino 2 library. The demos as such are uncommented but mostly easy to understand. The gameduino 2 book that comes with the Gameduino 2 device describes all the features of the device and gives enough desciption of the methods defined in the Gameduino 2 library. 
         
         Before porting the examples to Céu, I had to understand the existing games. This was done by running the existing code by commenting the different modules one by one to understand their function. The Gameduino 2 book was particularly helpful in this stage. The Gameduino 2 official forum is very active and came to my rescue very often during the project. 
 
-        The demos are:
+The demos are:
         Hello World - Prints Hello World on screen.
         Blobs       - Program to introduce touch
         Sprites     - Program to introduce loading and displaying the game sprites on screen.
@@ -54,8 +54,8 @@ The existing demos, written in native C, cover all the essential aspects require
         Nightstrike - The nightstrike game on gameduino 2.
         Manic miner - The manic miner game on gameduino 2.
 
-    IV. Porting easier examples to Céu
+IV. Porting easier examples to Céu
         The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
         The sprites program
 
-    V. Working on harder games  
+V. Working on harder games  
