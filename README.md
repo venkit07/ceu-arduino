@@ -62,16 +62,36 @@ The demos are:
 **2.4 Porting easier demos to Céu**
 
 The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
-
-// TODO
+The sprites program was also complete in three days.
+The next week, I worked on the kenney program. We built the individual components one-by-one, implemented all its features and in the end, integrated the whole program together. We followed the same strategy throughout the program.
+The execution model of Céu was highly useful in developing the games as opposed to the native games. The structure of Céu makes it easy to write programs in the language. I also implemented the jnr demo in a week.
 
 **2.5 Working on the harder games**
 
-// TODO
+I worked on two hard games, namely Frogger and nightstrike, both of which are implementation of famous games by the same names, in Gameduino 2. 
+
+Since the frogger game was the first large program, we had to undergo a lot of iterations of modifications to get the program to make it completely Céu-like. Thus involved removing a lot of state variables, that is common with C programs. This is because, with the native programs, the program cannot be structured in a easily readable and stateless way. Céu provides various features that help to make the program to be structured in a logically readable way, thereby avoiding the usage of state variables. Mt mentor gave a lot of suggestions in doing this and getting the program to perfection.
+
+I gained a better idea about structuring the programs for Céu after the frogger game. Because of that, I was able to do better while programming the nightstrike game. Implementing the individual components of the game was pretty much easy. I faced difficulties in detecting the collision between the components. I came to know about interfaces in Céu from my mentor. I then implemented the collision referring the rocks example in Céu developed for the SDL platform. The rocks program, being well-documented, was hugely helpful in this task.
+
+While coding the larger programs, like nightstrike, we faced various memory issues. Even with less than half the variables as the native program, the program was crashing. My mentor figured that they hadn't put effort on memory consumption for organisms and that this will have to be worked upon in the future inorder to improve the language on that front.
 
 ####3. Timeline and Completed Games
 
-// TODO
+The GSoC project was for a total duration of 13 weeks. The timeline followed was:
+
+ - In the first two weeks, I worked on porting an SDL example in Céu to Gameduino 2 inorder to get familiar with writing a basic program in Céu for Gameduino 2. I also read an academic paper on Céu and understood the video on dynamic models in Céu.
+ - The third week was spent coding the blobs and sprites program.
+ - In the fourth week I finished the kenney program. 
+ - The next week I worked on the frogger and implemented some features. 
+ - The next week I faced some personal problems ( relocated, presented a paper at a conference) and some environment issues. Hence, I couldnt make much progress this week. 
+ - In the seventh week, I worked on the jnr program.
+ - The next three weeks were spent in implementing all the components of the frogger program, restructuring the code multiple times adn testing them. 
+
+In between the frogger program we realize that we might not be able to complete all the demos as per the original plan. So, we decide to ignore the demos such as jnr, cobra and chess, which do not gain from being ported to Céu. The overall goals of the project was adjusted to complete fully polished versions of Frogger and Nightstrike. 
+
+ - I finished the nightstrike game in the next two and a half weeks.
+ - The last few days were spent testing all the codes once again, commenting all the programs and documenting my project.
 
 ####4. Experience & Takeaways
 
