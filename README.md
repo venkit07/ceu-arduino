@@ -1,6 +1,6 @@
-# Google Summer of Code'14 Report #
+# Google Summer of Code'14 Report 
 
-## Porting Gameduino demos to Céu - 19.05.14 to 18.08.14 ##
+## Porting Gameduino demos to Céu - 19.05.14 to 18.08.14
 
 Student - Venkiteswaran R
 
