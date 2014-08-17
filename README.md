@@ -98,4 +98,8 @@ In between the frogger program we realize that we might not be able to complete 
 
 ####4. Experience & Takeaways
 
-// TODO
+I had a very memorable GSoC experience. This was my first ever open source experience. I loved contributing to the community. This experience has led me to grow more interest towards open source. Through this project I was introduced to the very interesting language Céu, which finds applications in reactive applications like wireless sensor networks. 
+
+I had a nice time working with my mentor Francisco Sant'anna. He was very helpful throughout the program. He explained things patiently whenever I was stuck and gave suggestions that helped the programs to achieve the final structure. I will be indebted to him for his valuable guidance. His great achievements through his career has inspired me further in the Computer Science field.
+
+Going forward, I would like to develop the invaders and the manic miner program as well in my free time. I would also like to develop other simple games like ultimate tic-tac-toe and 2048 for Céu in the Gameduino platform as well as the SDL platform. I would also love to do all possible contributions from my part to the Céu/Lua community.
