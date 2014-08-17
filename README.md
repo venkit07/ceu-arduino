@@ -19,8 +19,10 @@ The existing demos, written in native C, cover all the essential aspects require
 Céu is a programming language developed using Lua. 
 Céu is a concurrent and reactive programming language that offers a safer and higher-level alternative to C.
 Céu supports synchronous concurrency with shared memory and deterministic execution. 
+
 Céu has a small memory footprint and integrates seamlessly with C. The two main peculiarities of Céu are the synchronous execution model and the use of organisms as abstractions. Céu is a language for real-time concurrency with complex control specifications, but not for algorithm-intensive or distributed applications.
-Céu has been developed to be compatible with many platforms including Arduino and Android. The Céu-in-a-Box environment gives an easy to use readily avaialbe environment.
+Céu has been developed to be compatible with many platforms including Arduino and Android. The Céu-in-a-Box environment gives an easy to use readily available environment.
+
 Céu is pretty much easy to learn once we get a hold of it. I learnt most of it on the go with the guidance of my mentor. The manual of the language given in the website is very helpful and decribes most of the aspects of the language and its usage. Still, parts of the manual is still under development. Those parts were described to me by my mentor. There are a lot of programs written in Céu for SDL and arduino platforms which are sufficiently documented and are helpful to learn the concepts not described in the manual.
 
   **2.2 Gameduino 2**
@@ -63,6 +65,7 @@ The demos are:
 
 The Hello World program was easy to begin with. After that, I struggled initially to get a start on writing programs using Céu. My mentor gave a huge helping hand by showing some example programs and explaining about them. The Blobs program was written largely with his help. Ater understanding the blobs program, we moved to the sprites program.
 The sprites program was also complete in three days.
+
 The next week, I worked on the kenney program. We built the individual components one-by-one, implemented all its features and in the end, integrated the whole program together. We followed the same strategy throughout the program.
 The execution model of Céu was highly useful in developing the games as opposed to the native games. The structure of Céu makes it easy to write programs in the language. I also implemented the jnr demo in a week.
 
